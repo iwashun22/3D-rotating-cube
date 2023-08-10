@@ -1,6 +1,6 @@
 $(() => {
   let rotateInterval;
-  const intervalTimeOut = 50;
+  const intervalTimeOut = 70;
   let degreeX = 0, degreeY = 0;
 
   rotateInterval = setInterval(rotateAnimation, intervalTimeOut);
@@ -52,11 +52,13 @@ $(() => {
   function rotateTo(x, y, directionX, directionY, stopX, stopY) {
     if(!directionX) {
       let gap = Math.abs(degreeX - x);
-      directionX = ((x > degreeX && gap < 180) || (x < degreeX && gap > 180)) ? 1 : -1;
+      directionX = (x < degreeX && gap < 180) || (gap > 180 && x > degreeX) ? -1 : 1;
+      // directionX = ((x > degreeX && gap < 180) || (x < degreeX && gap > 180)) ? 1 : -1;
     }
     if(!directionY) {
       let gap = Math.abs(degreeY - y);
-      directionY = ((y > degreeY && gap < 180) || (y < degreeY && gap > 180)) ? 1 : -1;
+      directionY = (y < degreeY && gap < 180) || (gap > 180 && y > degreeY) ? -1 : 1;
+      // directionY = ((y > degreeY && gap < 180) || (y < degreeY && gap > 180)) ? 1 : -1;
     }
     // console.log(directionX, directionY);
     if(!stopX) {
