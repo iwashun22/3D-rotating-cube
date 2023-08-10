@@ -43,23 +43,23 @@ body {
   transform: translateZ(100px);
 }
 .back {
-  transform: translateZ(-100px) rotateY(180deg);
+  transform: rotateY(180deg) translateZ(100px);
 }
 .right {
-  transform: rotateY(90deg) translateX(100px);
-  transform-origin: right;
+  transform: rotateY(90deg) translateZ(100px);
+  /* transform-origin: right; */
 }
 .left {
-  transform: rotateY(-90deg) translateX(-100px);
-  transform-origin: left;
+  transform: rotateY(-90deg) translateZ(100px);
+  /* transform-origin: left; */
 }
 .top {
-  transform: rotateX(90deg) translateY(-100px);
-  transform-origin: top;
+  transform: rotateX(90deg) translateZ(100px);
+  /* transform-origin: top; */
 }
 .bottom {
-  transform: rotateX(-90deg) translateY(100px);
-  transform-origin: bottom;
+  transform: rotateX(-90deg) translateZ(100px);
+  /* transform-origin: bottom; */
 }
 
 /* 
@@ -78,20 +78,20 @@ body {
 */
 
 .wrap:hover .front {
-  transform: translateZ(320px);
+  transform: translateZ(180px);
 }
 .wrap:hover .back {
-  transform: translateZ(-120px) rotateY(180deg);
+  transform: translateZ(-180px) rotateY(180deg);
 }
 .wrap:hover .right {
-  transform: translateX(120px) rotateY(90deg);
+  transform: translateX(180px) rotateY(90deg);
 }
 .wrap:hover .left {
-  transform: translateX(-120px) rotateY(-90deg);
+  transform: translateX(-180px) rotateY(-90deg);
 }
 .wrap:hover .top {
-  transform: translateY(-120px) rotateX(90deg);
+  transform: translateY(-180px) rotateX(90deg);
 }
 .wrap:hover .bottom {
-  transform: translateY(120px) rotateX(-90deg);
+  transform: translateY(180px) rotateX(-90deg);
 }
