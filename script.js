@@ -6,6 +6,7 @@ $(() => {
   rotateInterval = setInterval(rotateAnimation, intervalTimeOut);
 
   const cube = $(".cube");
+  const everySides = $(".cube div");
   
   function rotateAnimation() {
     degreeX += 1;
@@ -16,10 +17,17 @@ $(() => {
   }
 
   function addClickEvent() {
-    $(".cube div").each(function(index, element) {
+    everySides.each(function(index, element) {
+      everySides.addClass("hover-effect");
+      everySides.removeClass("no-effect");
+      
       $(element).on("click", function(e) {
         clearInterval(rotateInterval);
-        $(".cube div").off("click");
+        everySides.removeClass("hover-effect");
+        everySides.addClass("no-effect");
+        $(this).addClass("clicked");
+        
+        everySides.off("click");
         if($(this).hasClass("front")) {
           rotateTo(0, 0);
           return;
