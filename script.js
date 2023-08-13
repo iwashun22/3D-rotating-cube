@@ -49,6 +49,9 @@ $(() => {
           case "bottom":
             rotateTo(90, 0)
             break;
+          default: 
+            console.error('Forget to add the "data-side" to each side of the cube, or name the side correctly.');
+            rotateTo(0, 0);
         }
       });
     });
