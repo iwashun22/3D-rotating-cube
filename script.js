@@ -18,10 +18,10 @@ $(() => {
   }
 
   function addClickEvent() {
+    everySides.addClass("hover-effect");
+    everySides.removeClass("no-effect");
+
     everySides.each(function(index, element) {
-      everySides.addClass("hover-effect");
-      everySides.removeClass("no-effect");
-      
       $(element).on("click", function(e) {
         clearInterval(rotateInterval);
         everySides.removeClass("hover-effect");
