@@ -1,6 +1,6 @@
 $(() => {
   let rotateInterval;
-  const intervalTimeOut = 70;
+  const intervalTimeOut = 10;
   let degreeX = 0, degreeY = 0;
 
   rotateInterval = setInterval(rotateAnimation, intervalTimeOut);
