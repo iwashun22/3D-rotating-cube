@@ -35,32 +35,31 @@ body {
   transition: .2s;
 }
 
-.cube div:hover {
+.cube .hover-effect:hover {
   background-color: red;  
 }
+.clicked {
+  background-color: red !important;
+}
 
-.front {
-  transform: translateZ(100px);
-}
-.back {
-  transform: rotateY(180deg) translateZ(100px);
-}
-.right {
-  transform: rotateY(90deg) translateZ(100px);
-  /* transform-origin: right; */
-}
-.left {
-  transform: rotateY(-90deg) translateZ(100px);
-  /* transform-origin: left; */
-}
-.top {
-  transform: rotateX(90deg) translateZ(100px);
-  /* transform-origin: top; */
-}
-.bottom {
-  transform: rotateX(-90deg) translateZ(100px);
-  /* transform-origin: bottom; */
-}
+.front { transform: translateZ(100px); }
+.front.no-effect { transform: translateZ(100px) !important; }
+
+.back { transform: rotateY(180deg) translateZ(100px); }
+.back.no-effect { transform: rotateY(180deg) translateZ(100px) !important; }
+
+.right { transform: rotateY(90deg) translateZ(100px); }
+.right.no-effect { transform: rotateY(90deg) translateZ(100px) !important; }
+
+.left { transform: rotateY(-90deg) translateZ(100px); }
+.left.no-effect { transform: rotateY(-90deg) translateZ(100px) !important; }
+
+.top { transform: rotateX(90deg) translateZ(100px); }
+.top.no-effect { transform: rotateX(90deg) translateZ(100px) !important; }
+
+.bottom { transform: rotateX(-90deg) translateZ(100px); }
+.bottom.no-effect { transform: rotateX(-90deg) translateZ(100px) !important; }
+
 
 /* 
 .cube {
