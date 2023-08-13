@@ -1,6 +1,7 @@
 $(() => {
   let rotateInterval;
-  const intervalTimeOut = 10;
+  const intervalTimeOut = 70;
+  const intervalTimeOutWhenClicked = 5;
   let degreeX = 0, degreeY = 0;
 
   rotateInterval = setInterval(rotateAnimation, intervalTimeOut);
@@ -26,70 +27,105 @@ $(() => {
         everySides.removeClass("hover-effect");
         everySides.addClass("no-effect");
         $(this).addClass("clicked");
-        
         everySides.off("click");
-        if($(this).hasClass("front")) {
-          rotateTo(0, 0);
-          return;
-        }
-        if($(this).hasClass("back")) {
-          rotateTo(0, 180);
-          return;
-        }
-        if($(this).hasClass("right")) {
-          rotateTo(0, 270);
-          return;
-        }
-        if($(this).hasClass("left")) {
-          rotateTo(0, 90);
-          return;
-        }
-        if($(this).hasClass("top")) {
-          rotateTo(270, 0);
-          return;
-        }
-        if($(this).hasClass("bottom")) {
-          rotateTo(90, 0)
-          return;
+
+        const side = $(this).data("side");
+        switch(side) {
+          case "front":
+            rotateTo(0, 0)
+            break;
+          case "back":
+            rotateTo(0, 180)
+            break;
+          case "right":
+            rotateTo(0, 270)
+            break;
+          case "left":
+            rotateTo(0, 90)
+            break;
+          case "top":
+            rotateTo(270, 0)
+            break;
+          case "bottom":
+            rotateTo(90, 0)
+            break;
         }
       });
     });
   }
   addClickEvent();
 
-  function rotateTo(x, y, directionX, directionY, stopX, stopY) {
-    if(!directionX) {
-      let gap = Math.abs(degreeX - x);
-      directionX = (x < degreeX && gap < 180) || (gap > 180 && x > degreeX) ? -1 : 1;
-      // directionX = ((x > degreeX && gap < 180) || (x < degreeX && gap > 180)) ? 1 : -1;
-    }
-    if(!directionY) {
-      let gap = Math.abs(degreeY - y);
-      directionY = (y < degreeY && gap < 180) || (gap > 180 && y > degreeY) ? -1 : 1;
-      // directionY = ((y > degreeY && gap < 180) || (y < degreeY && gap > 180)) ? 1 : -1;
-    }
-    // console.log(directionX, directionY);
-    if(!stopX) {
-      degreeX += directionX;
-      degreeX %= 360;
-    }
-    if(!stopY) {
-      degreeY += directionY;
-      degreeY %= 360;
-    }
-    cube.css("transform", `rotateX(${degreeX}deg) rotateY(${degreeY}deg)`);
-    let sameX = degreeX < 0 ? (degreeX + 360) == x : degreeX == x;
-    let sameY = degreeY < 0 ? (degreeY + 360) == y : degreeY == y;
-    if(!sameX || !sameY) {
-      // console.log(degreeX, x);
-      // console.log(degreeY, y, sameY, directionY);
-      setTimeout(() => { rotateTo(x, y, directionX, directionY, sameX, sameY) }, 10)
-    }
-    else {
+  function rotateTo(x, y, running = false, directionX = null, directionY = null) {
+    if(!running) {
+      const info = makeInfoTable(
+        [degreeX, degreeY], [x, y]
+      );
+      console.table(info);
+      rotateInterval = setInterval(() => {
+        rotateTo(x, y, true);
+      }, intervalTimeOutWhenClicked);
+      return;
+    } else if(degreeX === x && degreeY === y) {
+      clearInterval(rotateInterval);
+      everySides.removeClass("clicked");
       setTimeout(() => { 
         rotateInterval = setInterval(rotateAnimation, intervalTimeOut) ;
         addClickEvent();
       }, 3000);
+      return;
     }
+
+    if(!directionX) {
+      directionX = findClosestDirection(degreeX, x);
+    }
+    if(!directionY) {
+      directionY = findClosestDirection(degreeY, y);
+    }
+    // console.log(directionX, directionY);
+    degreeX = degreeX === x ? degreeX : (
+      (degreeX + directionX) % 360
+    );
+    degreeX = degreeX < 0 ? (degreeX + 360) : degreeX;
+    
+    degreeY = degreeY === y ? degreeY : (
+      (degreeY + directionY) % 360
+    );
+    degreeY = degreeY < 0 ? (degreeY + 360) : degreeY;
+
+    cube.css("transform", `rotateX(${degreeX}deg) rotateY(${degreeY}deg)`);
+  }
+
+  function findClosestDirection(currentDegree, endPoint) {
+    currentDegree = currentDegree < 0 ? (currentDegree + 360) : currentDegree;
+    endPoint = endPoint < 0 ? (endPoint + 360) : endPoint;
+
+    let gap = 0;
+    if(currentDegree < endPoint) {
+      gap = currentDegree - endPoint;
+      return gap <= 180 ?
+        1 : // increase
+        -1; // decrease
+    } else {
+      gap = currentDegree - endPoint;
+
+      return gap <= 180 ?
+        -1 : // decrease
+        1; // increase
+    }
+  }
+
+  function makeInfoTable([currentX, currentY], [toX, toY]) {
+    return {
+      x: {
+        now: currentX,
+        to: toX,
+        direction: findClosestDirection(currentX, toX) === 1 ? "increase" : "decrease"
+      },
+      y: {
+        now: currentY,
+        to: toY,
+        direction: findClosestDirection(currentY, toY) === 1 ? "increase" : "decrease"
+      }
+    };
   }
 })
