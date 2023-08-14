@@ -104,12 +104,12 @@ $(() => {
 
     let gap = 0;
     if(currentDegree < endPoint) {
-      gap = currentDegree - endPoint;
+      gap = endPoint - currentDegree;
       return gap <= 180 ?
         1 : // increase
         -1; // decrease
     } else {
-      gap = endPoint - currentDegree;
+      gap = currentDegree -  endPoint;
 
       return gap <= 180 ?
         -1 : // decrease
