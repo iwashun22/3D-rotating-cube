@@ -109,7 +109,7 @@ $(() => {
         1 : // increase
         -1; // decrease
     } else {
-      gap = currentDegree - endPoint;
+      gap = endPoint - currentDegree;
 
       return gap <= 180 ?
         -1 : // decrease
